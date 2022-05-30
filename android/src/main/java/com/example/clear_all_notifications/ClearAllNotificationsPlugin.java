@@ -2,6 +2,8 @@ package com.example.clear_all_notifications;
 
 import androidx.annotation.NonNull;
 
+import android.service.notification.StatusBarNotification;
+
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
@@ -59,6 +61,13 @@ public class ClearAllNotificationsPlugin implements FlutterPlugin, MethodCallHan
   private void channelMethodClearTagNotifications(@NonNull Result result, String tag) {
     try {
       NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+
+      StatusBarNotification[] notifications = notificationManager.getActiveNotifications();
+      for (StatusBarNotification sbn : notifications) {
+        Log.i("TAG", sbn.toString());
+        Log.i("TAG", String.valueOf(sbn.getId()));
+      }
+
       notificationManager.cancel(tag, 0);
       result.success(true);
     } catch (Exception e) {
