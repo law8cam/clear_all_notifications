@@ -3,6 +3,7 @@ package com.example.clear_all_notifications;
 import androidx.annotation.NonNull;
 
 import android.service.notification.StatusBarNotification;
+import android.util.Log;
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.plugin.common.MethodCall;
@@ -87,7 +88,7 @@ public class ClearAllNotificationsPlugin implements FlutterPlugin, MethodCallHan
       for (StatusBarNotification sbn : notifications) {
         Log.i("TAG", sbn.toString());
         Log.i("TAG", String.valueOf(sbn.getId()));
-        notificationData.push(sbn.toString());
+//        notificationData.push(sbn.toString());
       }
       result.success(notificationData);
     } catch (Exception e) {
