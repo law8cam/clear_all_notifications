@@ -8,4 +8,8 @@ class ClearAllNotifications {
   static Future<void> clear() async {
     await _channel.invokeMethod('clear');
   }
+
+  static Future<void> clearTag(String tag) async {
+    await _channel.invokeMethod('clearTag', {"tag": tag});
+  }
 }

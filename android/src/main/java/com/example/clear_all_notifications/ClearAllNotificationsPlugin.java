@@ -33,6 +33,9 @@ public class ClearAllNotificationsPlugin implements FlutterPlugin, MethodCallHan
       result.success("Android " + android.os.Build.VERSION.RELEASE);
     } else if (call.method.equals("clear")) {
       channelMethodClearAllNotifications(result);
+    } else if (call.method.equals("clearTag")) {
+      String tag = call.argument("tag");
+      channelMethodClearTagNotifications(result, tag);
     } else {
       result.notImplemented();
     }
@@ -50,6 +53,16 @@ public class ClearAllNotificationsPlugin implements FlutterPlugin, MethodCallHan
       result.success(true);
     } catch (Exception e) {
       result.error("Can not clear all notifications", e.getMessage(), e);
+    }
+  }
+
+  private void channelMethodClearTagNotifications(@NonNull Result result, String tag) {
+    try {
+      NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+      notificationManager.cancel(tag, 0);
+      result.success(true);
+    } catch (Exception e) {
+      result.error("Can not clear tag notifications", e.getMessage(), e);
     }
   }
 }
