@@ -12,4 +12,9 @@ class ClearAllNotifications {
   static Future<void> clearTag(String tag) async {
     await _channel.invokeMethod('clearTag', {"tag": tag});
   }
+
+  static Future<dynamic> getNotificationData(String tag) async {
+    var result = await _channel.invokeMethod('getNotificationData')
+    return result;
+  }
 }

@@ -38,6 +38,8 @@ public class ClearAllNotificationsPlugin implements FlutterPlugin, MethodCallHan
     } else if (call.method.equals("clearTag")) {
       String tag = call.argument("tag");
       channelMethodClearTagNotifications(result, tag);
+    }else if (call.method.equals("getNotificationData")) {
+      getNotificationData(result);
     } else {
       result.notImplemented();
     }
@@ -70,6 +72,24 @@ public class ClearAllNotificationsPlugin implements FlutterPlugin, MethodCallHan
 
       notificationManager.cancel(tag, 0);
       result.success(true);
+    } catch (Exception e) {
+      result.error("Can not clear tag notifications", e.getMessage(), e);
+    }
+  }
+
+  private void getNotificationData(@NonNull Result result) {
+    try {
+      NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+
+      StatusBarNotification[] notifications = notificationManager.getActiveNotifications();
+      String[] notificationData = new String[notifications.length];
+
+      for (StatusBarNotification sbn : notifications) {
+        Log.i("TAG", sbn.toString());
+        Log.i("TAG", String.valueOf(sbn.getId()));
+        notificationData.push(sbn.toString());
+      }
+      result.success(notificationData);
     } catch (Exception e) {
       result.error("Can not clear tag notifications", e.getMessage(), e);
     }
