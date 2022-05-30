@@ -14,7 +14,7 @@ class ClearAllNotifications {
   }
 
   static Future<dynamic> getNotificationData(String tag) async {
-    var result = await _channel.invokeMethod('getNotificationData')
+    var result = await _channel.invokeMethod('getNotificationData');
     return result;
   }
 }
